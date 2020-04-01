@@ -12,20 +12,22 @@
 
     {{ View.fireHook('frontend.head') }}
 
+    <link href="{{ asset_rev('resources/templates/frontend/' ~ template ~ '/main-overrides.css') }}" rel="stylesheet" type="text/css">
+
     {% set route = Route.currentRouteName() %}
 </head>
 
-<body class="{{ get_template_mode(false) }} sp-bg-secondary sp-text-primary">
+<body class="{{ get_template_mode(false) }} sp-bg-primary sp-text-primary">
 
     {{ View.fireHook('frontend.body_start') }}
 
-    <header class="sp-sticky sp-top-0 sp-z-10002 sp-px-6 sp-bg-primary lg:sp-px-8 print:sp-static print:sp-px-0 print:sp-shadow-none
-                   {% if not (route starts with 'core.frontend.home') or not(isModuleEnabled('Selfservice')) %}sp-shadow{% endif %}">
+    <header class="sp-sticky sp-top-0 sp-z-10002 sp-px-6 sp-bg-primary-800 lg:sp-px-8 print:sp-static print:sp-px-0 print:sp-shadow-none
+                   sp-shadow">
         <div class="sp-container sp-relative sp-py-2 sp-m-auto print:sp-max-w-full">
             {{ View.fireHook('frontend.header_start') }}
 
             <div class="sp-search sp-absolute sp-hidden sp-flex sp-items-center sp-h-full sp-w-full sp--mt-2
-                        sp-bg-primary sp-z-10 print:sp-hidden">
+                        sp-bg-primary-800 sp-z-10 print:sp-hidden">
                 <div class="sp-flex-grow sp-w-full">
                     <form name="search" action="{{ route('core.frontend.search') }}" method="post">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
@@ -51,7 +53,7 @@
                 </div>
 
                 <div class="sp-flex-none print:sp-hidden">
-                    {% if not (route starts with 'core.frontend.home') and isModuleEnabled('Selfservice') %}
+                    {% if isModuleEnabled('Selfservice') %}
                         <a class="sp-search-button sp-p-2 sp-mr-2">
                             <i class="fas fa-search"></i>
                         </a>
@@ -137,7 +139,7 @@
 
                     {{ View.fireHook('frontend.content_start') }}
 
-                    <div class="sp-content-inner sp-p-6 sp-bg-primary sp-break-words xs:sp-rounded print:sp-p-0">
+                    <div class="sp-content-inner sp-break-words">
 
                         {{ View.fireHook('frontend.content_inner_start') }}
 
@@ -162,6 +164,11 @@
                                 {% endfor %}
                             </div>
                         {% endif %}
+
+                        <div class="sp-alert sp-alert-warning">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;&nbsp;
+                            Are you a new user? Please read our <a href="https://brand.demo.supportpal.com/en/documentation">documentation</a> to see if it covers your issue before opening a ticket.
+                        </div>
 
                         {% block content %}{% endblock %}
 

@@ -1,0 +1,21 @@
+.sp-search-button .fa-search,
+header .sp-flex-none > a,
+header a.sp-action {
+    color: #fff;
+}
+
+.sp-search-button .fa-search:hover,
+header .sp-flex-none > a:hover,
+header a.sp-action:hover {
+    color: var(--color-primary-300);
+}
+
+.sp-mobile-nav-button div {
+    border-color: #fff;
+    color: #fff;
+}
+
+.sp-mobile-nav-button div:hover {
+    background-color: #fff;
+    color: var(--color-primary-800);
+}
