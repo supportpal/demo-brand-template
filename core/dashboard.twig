@@ -60,7 +60,7 @@
 
         {% if isModuleEnabled('Selfservice') %}
             {% for type in types %}
-                <a href="{{ type.url }}" class="sp-block sp-px-6 sp-py-4 sp-bg-secondary sp-rounded sp-shadow">
+                <a href="{{ type.url }}" class="sp-block sp-px-6 sp-py-3 sp-bg-secondary sp-rounded sp-shadow">
                     <div class="sp-dashboard-section sp-flex sp-items-center" id="sp-selfservice-{{ type.id }}">
                         <div class="sp-icon sp-flex-none sp-mr-6">
                             <i class="fas fa-fw {{ type.icon }} sp-text-5xl" alt="{{ type.name }}"></i>
