@@ -2,6 +2,8 @@
 <html class="{{ get_template_mode(false) }}">
 
 <head>
+    {{ View.fireHook('frontend.head_start') }}
+
     {% set title = block('title') is defined ? block('title') : Lang.get('general.support_portal')|e %}
     <title>{{ company }} - {{ title|raw }}</title>
 
@@ -13,11 +15,12 @@
 
     {% block scripts_header %}{% endblock %}
 
+    {% set route = Route.currentRouteName() %}
+
     {{ View.fireHook('frontend.head') }}
+    {{ View.fireHook('frontend.head_end') }}
 
     <link href="{{ asset_rev('resources/templates/frontend/' ~ template ~ '/main-overrides.css') }}" rel="stylesheet" type="text/css">
-
-    {% set route = Route.currentRouteName() %}
 </head>
 
 <body class="sp-bg-primary sp-text-primary print:sp-bg-primary">
