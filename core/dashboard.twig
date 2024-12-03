@@ -18,7 +18,7 @@
                 <a href="{{ route('ticket.frontend.ticket.createStep1') }}"
                    class="sp-w-full sp-px-6 sp-py-3 sp-m-3 sp-bg-secondary sp-rounded sp-shadow">
                     <div class="sp-dashboard-section sp-flex sp-items-center">
-                        <div class="sp-icon sp-flex-none sp-mr-6">
+                        <div class="sp-icon sp-flex-none sp-me-6">
                             <i class="fas fa-fw fa-envelope-open-text sp-text-5xl" alt="{{ Lang.get('core.submit_ticket') }}"></i>
                         </div>
                         <div class="sp-grow sp-py-1">
@@ -31,7 +31,7 @@
                     <a href="{{ route('ticket.frontend.track') }}"
                        class="sp-w-full sp-px-6 sp-py-3 sp-m-3 sp-bg-secondary sp-rounded sp-shadow">
                         <div class="sp-dashboard-section sp-flex sp-items-center">
-                            <div class="sp-icon sp-flex-none sp-mr-6">
+                            <div class="sp-icon sp-flex-none sp-me-6">
                                 <i class="fas fa-fw fa-binoculars sp-text-5xl" alt="{{ Lang.get('core.track_ticket') }}"></i>
                             </div>
                             <div class="sp-grow sp-py-1">
@@ -44,7 +44,7 @@
                     <a href="{{ route('ticket.frontend.ticket.index') }}"
                        class="sp-w-full sp-px-6 sp-py-3 sp-m-3 sp-bg-secondary sp-rounded sp-shadow">
                         <div class="sp-dashboard-section sp-flex sp-items-center">
-                            <div class="sp-icon sp-flex-none sp-mr-6">
+                            <div class="sp-icon sp-flex-none sp-me-6">
                                 <i class="fas fa-fw fa-binoculars sp-text-5xl" alt="{{ Lang.get('core.track_ticket') }}"></i>
                             </div>
                             <div class="sp-grow sp-py-1">
@@ -61,7 +61,7 @@
             {% for type in types %}
                 <a href="{{ type.url }}" class="sp-block sp-px-6 sp-py-3 sp-bg-secondary sp-rounded sp-shadow">
                     <div class="sp-dashboard-section sp-flex sp-items-center" id="sp-selfservice-{{ type.id }}">
-                        <div class="sp-icon sp-flex-none sp-mr-6">
+                        <div class="sp-icon sp-flex-none sp-me-6">
                             <i class="fas fa-fw {{ type.icon }} sp-text-5xl" alt="{{ type.name }}"></i>
                         </div>
                         <div class="sp-grow sp-py-1">
