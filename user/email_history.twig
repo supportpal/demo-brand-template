@@ -8,10 +8,10 @@
 {% endblock %}
 
 {% block content %}
-    <div class="sp-date-range-filter sp-me-4">
+    <div class="sp-date-range-filter sp:me-4">
         <button class="sp-action sp-filter-datepicker">
-            <i class="fas fa-calendar"></i>
-            <span class="sp-hidden sm:sp-inline">
+            <i class="fa-solid fa-calendar"></i>
+            <span class="sp:hidden sp:sm:inline">
                 &nbsp;<span class="sp-filter-datepicker-text">{{ Lang.get('general.date') }}</span>
             </span>
         </button>
@@ -36,7 +36,7 @@
 
                 $("div.dt-search")
                     .removeClass('dt-search')
-                    .addClass('sp-flex sp-ms-6 sp-mb-6');
+                    .addClass('sp:flex sp:ms-6 sp:mb-6');
             });
         });
     </script>

@@ -20,12 +20,12 @@
                 {% set emailAttributes = emailAttributes|merge({'readonly': 'readonly'}) %}
             {% endif %}
 
-            <div {% if record.exists %}class="sp-mb-3"{% endif %}>
+            <div {% if record.exists %}class="sp:mb-3"{% endif %}>
                 {{ form_email('email', record.email, emailAttributes) }}
             </div>
 
             {% if emailChange %}
-                <div class="sp-alert sp-alert-warning sp-mb-3">
+                <div class="sp-alert sp-alert-warning sp:mb-3">
                     {{ Lang.get('user.updating_email_address', {'email': emailChange.new_email}) }}
                 </div>
             {% endif %}
@@ -71,12 +71,12 @@
             {{ form_label('twofa_enabled', Lang.get('user.two_fa_enabled')) }}
             <div class="sp-input-container">
                 {% if record.twofa_enabled %}
-                    <div class="twofa-enabled sp-text-green-600 sp-font-bold">{{ Lang.get('general.yes') }}</div>
+                    <div class="twofa-enabled sp:text-green-600 sp:font-bold">{{ Lang.get('general.yes') }}</div>
                 {% else %}
-                    <div class="twofa-enabled sp-text-red-600 sp-font-bold">{{ Lang.get('general.no') }}</div>
+                    <div class="twofa-enabled sp:text-red-600 sp:font-bold">{{ Lang.get('general.no') }}</div>
                 {% endif %}
                 {% if not record.twofa_enabled or (record.id == auth_user().id and not Config.get('settings.force_2fa_users', 0)) %}
-                    <div class="sp-mt-3">
+                    <div class="sp:mt-3">
                         <a class="sp-button" href="{{ route('user.twofa') }}">{{ Lang.get('general.manage') }}</a>
                     </div>
                 {% endif %}
@@ -132,12 +132,12 @@
             {{ form_label('avatar', Lang.get('user.avatar')) }}
             <div class="sp-input-container">
                 <img class="sp-avatar" src="{{ record.avatar_url }}" />
-                <div class="{% if record.getRawOriginal('avatar') is not null %}sp-button-group{% endif %} sp-mt-3">
+                <div class="{% if record.getRawOriginal('avatar') is not null %}sp-button-group{% endif %} sp:mt-3">
                     <label class="sp-button">
-                        <input type="file" name="avatar" class="sp-hidden" data-url="{{ route('user.avatar.upload', {id: record.id}) }}" />
+                        <input type="file" name="avatar" class="sp:hidden" data-url="{{ route('user.avatar.upload', {id: record.id}) }}" />
                         {{ Lang.get('general.update') }}
                     </label>
-                    <button class="remove-avatar {% if record.getRawOriginal('avatar') is null %}sp-hidden{% endif %}" type="button"
+                    <button class="remove-avatar {% if record.getRawOriginal('avatar') is null %}sp:hidden{% endif %}" type="button"
                             data-url="{{ route('user.avatar.delete', {id: record.id}) }}">
                         {{ Lang.get('general.remove') }}
                     </button>

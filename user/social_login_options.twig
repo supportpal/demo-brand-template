@@ -1,9 +1,9 @@
 {% for provider in socialite_providers %}
     {% if provider.integration is not empty %}
         <a href="{{ route('user.oauth_redirect', {'provider': provider.name}) }}"
-           class="sp-social-login sp-px-4 sp-m-3/2" style="background-color: {{ provider.integration.colour }};">
-            <span class="sp-me-1">
-                <i class="fab fa-{{ provider.integration.fa_icon ?? provider.name }} fa-fw"></i>
+           class="sp-social-login sp:px-4 sp:m-1.5" style="background-color: {{ provider.integration.colour }};">
+            <span class="sp:me-1">
+                <i class="fa-brands fa-{{ provider.integration.fa_icon ?? provider.name }}"></i>
             </span>
             {{ Lang.get('user.login_via', {'provider': provider.integration.name }) }}
         </a>

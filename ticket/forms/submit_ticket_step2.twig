@@ -14,11 +14,11 @@
     <p class="sp-description">{{ Lang.get('ticket.select_department_desc') }}</p>
 
     {% for department in departments %}
-        <a class="sp-department sp-block sp-px-4 sp-py-3 sp-mt-3 sp-bg-secondary sp-border sp-border-tertiary sp-rounded hover:sp-bg-tertiary"
+        <a class="sp-department sp:block sp:px-4 sp:py-3 sp:mt-3 sp:bg-secondary sp:border sp:border-tertiary sp:rounded sp:hover:bg-tertiary"
            href="{{ route('ticket.frontend.ticket.createStep3', {'department': department.id}) }}">
             <h4>{{ department.frontend_name }}</h4>
             {% if department.description is not empty %}
-                <p class="sp-mt-3/2 sp-mb-0 sp-description">{{ department.description }}</p>
+                <p class="sp:mt-1.5 sp:mb-0 sp-description">{{ department.description }}</p>
             {% endif %}
         </a>
     {% else %}

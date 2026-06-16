@@ -21,13 +21,13 @@
         <div class="sp-form-row">
             {{ form_label('number', Lang.get('ticket.ticket_number')) }}
             <div class="sp-input-container">
-                {{ form_text('number', Request.get('number')) }}
+                {{ form_text('number', Request.input('number')) }}
             </div>
         </div>
 
         {% if showCaptcha %}
             {% if Captcha.isVisible() %}
-                <div class="sp-form-row sp-items-center">
+                <div class="sp-form-row sp:items-center">
                     <div class="sp-input-container">
                         {{ Captcha.getHtml() }}
                     </div>

@@ -11,8 +11,8 @@
 
 {% block content %}
 
-    <p class="sp-m-0">{{ Lang.get('messages.cant_find_page') }} {{ Lang.get('messages.please_report') }}</p>
+    <p class="sp:m-0">{{ Lang.get('messages.cant_find_page') }} {{ Lang.get('messages.please_report') }}</p>
 
-    <p class="sp-mb-0">{{ Lang.get('messages.return_to', {'page': '<a href="' ~ route('core.frontend.home') ~ '">' ~ mb_strtolower(Lang.get('general.support_portal'), 'UTF-8') ~ '</a>'})|raw }}</p>
+    <p class="sp:mb-0">{{ Lang.get('messages.return_to', {'page': '<a href="' ~ route('core.frontend.home') ~ '">' ~ mb_strtolower(Lang.get('general.support_portal'), 'UTF-8') ~ '</a>'})|raw }}</p>
 
 {% endblock %}

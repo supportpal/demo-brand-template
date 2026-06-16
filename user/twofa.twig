@@ -9,17 +9,17 @@
 
 {% block content %}
 
-    <div class="sp-form-row {% if auth_user().twofa_enabled and Config.get('settings.force_2fa_users') %}sp-mb-0{% endif %}">
+    <div class="sp-form-row {% if auth_user().twofa_enabled and Config.get('settings.force_2fa_users') %}sp:mb-0{% endif %}">
         {{ form_label('twofa_enabled', Lang.get('user.two_fa_enabled')) }}
         <div class="sp-input-container">
-            <strong class="twofa-enabled sp-text-green-600 {% if not auth_user().twofa_enabled %}sp-hidden{% endif %}">
+            <strong class="twofa-enabled sp:text-green-600 {% if not auth_user().twofa_enabled %}sp:hidden{% endif %}">
                 {{ Lang.get('general.yes') }}
             </strong>
-            <strong class="twofa-enabled sp-text-red-600 {% if auth_user().twofa_enabled %}sp-hidden{% endif %}">
+            <strong class="twofa-enabled sp:text-red-600 {% if auth_user().twofa_enabled %}sp:hidden{% endif %}">
                 {{ Lang.get('general.no') }}
             </strong>
             {% if not Config.get('settings.force_2fa_users') %}
-                <div class="sp-description sp-mt-3">
+                <div class="sp-description sp:mt-3">
                     {% if auth_user().twofa_enabled %}
                         {{ Lang.get('user.two_fa_disable') }}
                     {% else %}
