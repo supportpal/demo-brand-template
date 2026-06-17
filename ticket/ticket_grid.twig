@@ -9,47 +9,60 @@
 
 {% block content %}
 
-    <a href="{{ route('ticket.frontend.ticket.createStep1') }}" class="sp-button sp-button-submit sp-mb-6">
-        <i class="fas fa-plus"></i>&nbsp; {{ Lang.get('core.submit_ticket') }}
+    <a href="{{ route('ticket.frontend.ticket.createStep1') }}" class="sp-button sp-button-submit sp:mb-6">
+        <i class="fa-solid fa-plus"></i>&nbsp; {{ Lang.get('core.submit_ticket') }}
     </a>
 
-    <div class="sp-filter-results sp-hidden">
+    <div class="sp-filter-results sp:hidden">
         <h3>{{ Lang.get('general.filter_results') }}</h3>
 
-        <div class="sp-table">
-            <div class="sp-table-row">
+        <div class="sp:table">
+            <div class="sp:table-row">
                 <label>{{ Lang.get('general.number') }}:</label>
                 <div id="filter_number"></div>
             </div>
-            <div class="sp-table-row">
+            <div class="sp:table-row">
                 <label>{{ Lang.get('general.subject') }}:</label>
                 <div id="filter_subject"></div>
             </div>
-            <div class="sp-table-row">
+            <div class="sp:table-row">
                 <label>{{ Lang.choice('ticket.department', 1) }}:</label>
-                <div id="filter_department"> </div>
+                <div id="filter_department"></div>
             </div>
-            <div class="sp-table-row">
+            <div class="sp:table-row">
                 <label>{{ Lang.choice('general.status', 1) }}:</label>
-                <div id="filter_status"> </div>
+                <div id="filter_status">
+                    <select class="yadcf-filter">
+                        <option value="{{ constant('App\\Modules\\Ticket\\Controllers\\Datatables\\TicketController::STATUS_ANY') }}">{{ Lang.get('general.select_value') }}</option>
+                        <optgroup label="{{ Lang.get('general.filter') }}">
+                            <option value="{{ constant('App\\Modules\\Ticket\\Controllers\\Datatables\\TicketController::STATUS_UNRESOLVED') }}">{{ Lang.get('ticket.unresolved') }}</option>
+                            <option value="{{ constant('App\\Modules\\Ticket\\Controllers\\Datatables\\TicketController::STATUS_RESOLVED') }}">{{ Lang.get('ticket.resolved') }}</option>
+                        </optgroup>
+                        <optgroup label="{{ Lang.choice('general.status', 2) }}">
+                            {% for status in statuses %}
+                                <option value="{{ status.id }}">{{ status.name }}</option>
+                            {% endfor %}
+                        </optgroup>
+                    </select>
+                </div>
             </div>
-            <div class="sp-table-row">
+            <div class="sp:table-row">
                 <label>{{ Lang.get('ticket.submitted') }}:</label>
                 <div>
                     <button class="sp-action sp-filter-datepicker" data-active="0" data-column="4">
-                        <i class="fas fa-calendar"></i>
-                        <span class="sp-hidden xs:sp-inline">
+                        <i class="fa-solid fa-calendar"></i>
+                        <span class="sp:hidden sp:xs:inline">
                         &nbsp;<span class="sp-filter-datepicker-text">{{ Lang.get('general.date') }}</span>
                     </span>
                     </button>
                 </div>
             </div>
-            <div class="sp-table-row">
+            <div class="sp:table-row">
                 <label>{{ Lang.get('ticket.last_reply') }}:</label>
                 <div>
                     <button class="sp-action sp-filter-datepicker" data-active="0" data-column="5">
-                        <i class="fas fa-calendar"></i>
-                        <span class="sp-hidden xs:sp-inline">
+                        <i class="fa-solid fa-calendar"></i>
+                        <span class="sp:hidden sp:xs:inline">
                         &nbsp;<span class="sp-filter-datepicker-text">{{ Lang.get('general.date') }}</span>
                     </span>
                     </button>

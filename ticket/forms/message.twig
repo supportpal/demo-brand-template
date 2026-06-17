@@ -8,12 +8,12 @@
         {{ form_hidden('token', Request.input('token')) }}
     {% endif %}
 
-    <div class="reply-form sp-editor-container sp-form-row sp-form-full">
+    <div class="reply-form sp-editor-container sp-form-row sp-form-full sp:relative">
         <div class="sp-input-container">
-            <div class="sp-recipients sp-truncate sp-cursor-pointer">
-                <div class="sp-table-row">
-                    <div class="sp-table-cell">{{ Lang.get('ticket.cc') }}</div>
-                    <div class="sp-table-cell">
+            <div class="sp-recipients sp:truncate sp:cursor-pointer">
+                <div class="sp:table-row">
+                    <div class="sp:table-cell">{{ Lang.get('ticket.cc') }}</div>
+                    <div class="sp:table-cell">
                         <div class="sp-recipients-text">
                             {% if organisationEmails is empty and ticket.cc is empty %}
                                 <div class="sp-description">{{ Lang.get('ticket.cc_desc') }}</div>
@@ -22,7 +22,7 @@
                             {% endif %}
                         </div>
 
-                        <select name="cc[]" multiple="multiple" class="sp-recipients-input sp-hidden">
+                        <select name="cc[]" multiple="multiple" class="sp-recipients-input sp:hidden">
                             {% for email in organisationEmails %}
                                 <option selected="selected" data-data='{{ {'value': email, 'unremovable': true}|json_encode(constant('JSON_FORCE_OBJECT')) }}'
                                         value='{{ email }}'>
@@ -42,11 +42,11 @@
                 {{ form_editor('text', null, {'data-route': loadDraftMessageRoute, 'id': 'newMessage'}) }}
             </div>
 
-            <div class="sp-flex sp-items-stretch sp-px-1 sp-bg-secondary sp-border sp-border-t-0 sp-border-tertiary sp-rounded-b">
-                <label class="sp-file-input sp-inline-block sp-px-2 sp-py-3/2 sp-text-sm sp-cursor-pointer hover:sp-text-secondary
-                             {% if not auth_check() %}sp-flex-grow{% else %}sp-flex-none{% endif %}">
-                    <i class="fas fa-paperclip"></i>
-                    <span class="sp-hidden md:sp-inline">&nbsp;{{ Lang.get('general.add_attachment') }}</span>
+            <div class="sp:flex sp:items-stretch sp:px-1 sp:bg-secondary sp:border sp:border-t-0 sp:border-tertiary sp:rounded-b-sm">
+                <label class="sp-file-input sp:inline-block sp:px-2 sp:py-1.5 sp:text-sm sp:cursor-pointer sp:hover:text-secondary
+                             {% if not auth_check() %}sp:grow{% else %}sp:flex-none{% endif %}">
+                    <i class="fa-solid fa-paperclip"></i>
+                    <span class="sp:hidden sp:md:inline">&nbsp;{{ Lang.get('general.add_attachment') }}</span>
                     <input class="sp-file-upload" type="file" name="files[]"
                            data-url="{{ route('ticket.frontend.attachment.upload') }}" multiple="multiple">
                 </label>
@@ -54,21 +54,21 @@
                 {% if auth_check() %}
                     <div class="tox-button-separator"></div>
 
-                    <span class="save-draft sp-inline-block sp-px-3/2 sp-py-1 sp-cursor-pointer hover:sp-text-secondary"
+                    <span class="save-draft sp:inline-block sp:px-1.5 sp:py-1 sp:cursor-pointer sp:hover:text-secondary"
                           title="{{ Lang.get('ticket.save_draft') }}">
-                        <i class="fas fa-save"></i>
+                        <i class="fa-solid fa-save"></i>
                     </span>
 
-                    <span class="discard-draft sp-inline-block sp-px-3/2 sp-py-1 sp-cursor-pointer hover:sp-text-secondary
-                                 {% if draft|default is empty %}sp-hidden{% endif %}"
+                    <span class="discard-draft sp:inline-block sp:px-1.5 sp:py-1 sp:cursor-pointer sp:hover:text-secondary
+                                 {% if draft|default is empty %}sp:hidden{% endif %}"
                                       title="{{ Lang.get('ticket.discard_draft') }}">
-                        <i class="fas fa-eraser"></i>
+                        <i class="fa-solid fa-eraser"></i>
                     </span>
 
-                    <span class="draft-success sp-description sp-inline-block sp-px-2 sp-py-3/2 sp-text-xs sp-truncate
-                                 sm:sp-text-sm {% if draft|default is empty %}sp-hidden{% endif %}">
+                    <span class="draft-success sp-description sp:inline-block sp:px-2 sp:py-1.5 sp:text-xs sp:truncate
+                                 sp:sm:text-sm {% if draft|default is empty %}sp:hidden{% endif %}">
                         {% if draft|default is not empty %}
-                            {{ Lang.get('ticket.draft_saved', {'time': formatDate(draft.updated_at)}) }}
+                            {{ Lang.get('ticket.draft_saved', {'time': timeago(draft.updated_at)})|raw }}
                         {% endif %}
                     </span>
                 {% endif %}
@@ -84,9 +84,9 @@
             </div>
 
             <ul class="sp-attached-files">
-                <li class="sp-flex sp-hidden">
-                    <div class="sp-me-2 sp-truncate">
-                        <i class="fas fa-file"></i>&nbsp;
+                <li class="sp:flex sp:hidden">
+                    <div class="sp:me-2 sp:truncate">
+                        <i class="fa-solid fa-file"></i>&nbsp;
 
                         <span class="sp-file-information">
                             <span class="sp-filename"></span>
@@ -94,8 +94,8 @@
                         </span>
                     </div>
 
-                    <div class="sp-delete-attachment sp-hidden sp-bg-red-600" title="{{ Lang.get('general.remove') }}">
-                        <i class="fas fa-times sp-text-white"></i>
+                    <div class="sp-delete-attachment sp:hidden" title="{{ Lang.get('general.remove') }}">
+                        <i class="fa-solid fa-times sp:text-white"></i>
                     </div>
 
                     <div class="sp-progress-bar">
@@ -104,9 +104,9 @@
                 </li>
 
                 {% for attachment in draft.attachments %}
-                    <li class="sp-flex">
-                        <div class="sp-me-2 sp-truncate">
-                            <i class="fas fa-file"></i>&nbsp;
+                    <li class="sp:flex">
+                        <div class="sp:me-2 sp:truncate">
+                            <i class="fa-solid fa-file"></i>&nbsp;
 
                             <span class="sp-file-information">
                             <span class="sp-filename">{{ attachment.original_name }}</span>
@@ -114,35 +114,35 @@
                             </span>
                         </div>
 
-                        <div class="sp-delete-attachment sp-bg-red-600"
+                        <div class="sp-delete-attachment"
                              data-url="{{ route('ticket.frontend.attachment.destroy') }}"
                              data-attachment-id="{{ attachment.id }}"
                              data-size="{{ attachment.upload.getRawOriginal('size') }}"
                              data-hash="{{ attachment.upload_hash }}"
                              data-silent="false"
                              title="{{ Lang.get('general.remove') }}">
-                            <i class="fas fa-times sp-text-white"></i>
+                            <i class="fa-solid fa-times sp:text-white"></i>
                         </div>
                     </li>
                 {% endfor %}
             </ul>
         </div>
-    </div>
 
-    <div class="sp-mt-4">
-        <div class="sp-attachment-dragover sp-hidden">
-            {{ Lang.get('general.drag_and_drop') }}
+        <div class="sp-attachment-dragover sp:hidden">
+            <div class="sp:m-auto">
+                {{ Lang.get('general.drag_and_drop') }}
+            </div>
         </div>
     </div>
 
     <input type="hidden" name="close" value="0" />
 
-    <div class="sp-flex sp-flex-wrap sp-mt-6 sm:sp-flex-nowrap">
-        {{ form_submit(Lang.choice('ticket.post_reply', 1), {'class': 'sp-w-full sm:sp-w-auto', 'disabled': 'disabled'}) }}
+    <div class="sp:flex sp:flex-wrap sp:mt-6 sp:sm:flex-nowrap">
+        {{ form_submit(Lang.choice('ticket.post_reply', 1), {'class': 'sp:w-full sp:sm:w-auto', 'disabled': 'disabled'}) }}
 
-        {% set class = 'sp-mark-resolved sp-w-full sm:sp-w-auto sp-mt-4 sm:sp-mt-0 sm:sp-ml-4' %}
+        {% set class = 'sp-mark-resolved sp:w-full sp:sm:w-auto sp:mt-4 sp:sm:mt-0 sp:sm:ml-4' %}
         {% if ticket.status.id == Config.get('settings.default_resolved_status') %}
-            {% set class = class ~ ' ' ~ 'sp-hidden' %}
+            {% set class = class ~ ' ' ~ 'sp:hidden' %}
         {% endif %}
         {{ form_button(Lang.get('ticket.mark_resolved'), {'class': class, 'data-close': Lang.get('ticket.mark_resolved_and_post_reply')}) }}
     </div>

@@ -7,10 +7,10 @@
 
 {% block precontent %}
     {% if show_search %}
-        <div class="sp-search-container sp-sticky sp-px-6 sp-bg-primary sp-shadow print:sp-hidden">
-            <div class="sp-container sp-pb-3 sp-m-auto sm:sp-pb-6 lg:sp-pt-3 lg:sp-pb-12">
-                <div class="sp-search sp-w-full sp-mx-auto sp-text-center sm:sp-w-3/4 lg:sp-w-2/3">
-                    <div class="sp-mb-3/2 sp-font-semibold sp-text-lg xs:sp-text-xl sm:sp-mb-3 sm:sp-text-2xl lg:sp-text-3xl">
+        <div class="sp-search-container sp:sticky sp:px-6 sp:bg-primary sp:shadow sp:print:hidden">
+            <div class="sp:container sp:pb-3 sp:m-auto sp:sm:pb-6 sp:lg:pt-3 sp:lg:pb-12">
+                <div class="sp-search sp:w-full sp:mx-auto sp:text-center sp:sm:w-3/4 sp:lg:w-2/3">
+                    <div class="sp:mb-1.5 sp:font-semibold sp:text-lg sp:xs:text-xl sp:sm:mb-3 sp:sm:text-2xl sp:lg:text-3xl">
                         {{ Lang.get('core.how_can_we_help') }}
                     </div>
                     <form name="search" action="{{ route('core.frontend.search') }}" method="get">
@@ -31,42 +31,42 @@
     {% else %}
 
         {% if isModuleEnabled('Ticket') %}
-            <div class="sp-flex sp-flex-wrap sp--m-3 lg:sp-flex-nowrap {% if not types.isEmpty() %}sp-mb-6{% endif %}">
+            <div class="sp:flex sp:flex-wrap sp:-m-3 sp:lg:flex-nowrap {% if not types.isEmpty() %}sp:mb-6{% endif %}">
                 <a href="{{ route('ticket.frontend.ticket.createStep1') }}"
-                   class="sp-w-full sp-px-6 sp-py-3 sp-m-3 sp-bg-secondary sp-rounded sp-shadow lg:sp-w-1/2">
-                    <div class="sp-dashboard-section sp-flex sp-items-center">
-                        <div class="sp-icon sp-flex-none sp-me-6">
-                            <i class="fas fa-fw fa-envelope-open-text sp-text-5xl" alt="{{ Lang.get('core.submit_ticket') }}"></i>
+                   class="sp:w-full sp:px-6 sp:py-3 sp:m-3 sp:bg-secondary sp:rounded sp:shadow sp:lg:w-1/2">
+                    <div class="sp-dashboard-section sp:flex sp:items-center sp:h-full">
+                        <div class="sp-icon sp:flex-none sp:me-6">
+                            <i class="fa-solid fa-envelope-open-text sp:text-5xl" alt="{{ Lang.get('core.submit_ticket') }}"></i>
                         </div>
-                        <div class="sp-grow sp-py-1">
-                            <h4 class="sp-text-xl">{{ Lang.get('core.submit_ticket') }}</h4>
-                            <p class="sp-m-0 sp-text-secondary">{{ Lang.get('core.submit_ticket_desc') }}</p>
+                        <div class="sp:grow sp:py-1">
+                            <h4 class="sp:text-xl">{{ Lang.get('core.submit_ticket') }}</h4>
+                            <p class="sp:m-0 sp:text-secondary">{{ Lang.get('core.submit_ticket_desc') }}</p>
                         </div>
                     </div>
                 </a>
                 {% if not auth_check() and Config.get('channel.web.settings.unauthenticated_users') %}
                     <a href="{{ route('ticket.frontend.track') }}"
-                       class="sp-w-full sp-px-6 sp-py-3 sp-m-3 sp-bg-secondary sp-rounded sp-shadow lg:sp-w-1/2">
-                        <div class="sp-dashboard-section sp-flex sp-items-center">
-                            <div class="sp-icon sp-flex-none sp-me-6">
-                                <i class="fas fa-fw fa-binoculars sp-text-5xl" alt="{{ Lang.get('core.track_ticket') }}"></i>
+                       class="sp:w-full sp:px-6 sp:py-3 sp:m-3 sp:bg-secondary sp:rounded sp:shadow sp:lg:w-1/2">
+                        <div class="sp-dashboard-section sp:flex sp:items-center">
+                            <div class="sp-icon sp:flex-none sp:me-6">
+                                <i class="fa-solid fa-binoculars sp:text-5xl" alt="{{ Lang.get('core.track_ticket') }}"></i>
                             </div>
-                            <div class="sp-grow sp-py-1">
-                                <h4 class="sp-text-xl">{{ Lang.get('core.track_ticket') }}</h4>
-                                <p class="sp-m-0 sp-text-secondary">{{ Lang.get('core.track_ticket_desc') }}</p>
+                            <div class="sp:grow sp:py-1">
+                                <h4 class="sp:text-xl">{{ Lang.get('core.track_ticket') }}</h4>
+                                <p class="sp:m-0 sp:text-secondary">{{ Lang.get('core.track_ticket_desc') }}</p>
                             </div>
                         </div>
                     </a>
                 {% elseif auth_check() %}
                     <a href="{{ route('ticket.frontend.ticket.index') }}"
-                       class="sp-w-full sp-px-6 sp-py-3 sp-m-3 sp-bg-secondary sp-rounded sp-shadow lg:sp-w-1/2">
-                        <div class="sp-dashboard-section sp-flex sp-items-center">
-                            <div class="sp-icon sp-flex-none sp-me-6">
-                                <i class="fas fa-fw fa-binoculars sp-text-5xl" alt="{{ Lang.get('core.track_ticket') }}"></i>
+                       class="sp:w-full sp:px-6 sp:py-3 sp:m-3 sp:bg-secondary sp:rounded sp:shadow sp:lg:w-1/2">
+                        <div class="sp-dashboard-section sp:flex sp:items-center">
+                            <div class="sp-icon sp:flex-none sp:me-6">
+                                <i class="fa-solid fa-binoculars sp:text-5xl" alt="{{ Lang.get('core.track_ticket') }}"></i>
                             </div>
-                            <div class="sp-grow sp-py-1">
-                                <h4 class="sp-text-xl">{{ Lang.get('core.my_tickets') }}</h4>
-                                <p class="sp-m-0 sp-text-secondary">{{ Lang.get('core.my_tickets_desc') }}</p>
+                            <div class="sp:grow sp:py-1">
+                                <h4 class="sp:text-xl">{{ Lang.get('core.my_tickets') }}</h4>
+                                <p class="sp:m-0 sp:text-secondary">{{ Lang.get('core.my_tickets_desc') }}</p>
                             </div>
                         </div>
                     </a>
@@ -80,29 +80,29 @@
 
                 <div class="sp-dashboard-section" id="sp-selfservice-{{ type.id }}">
                     <div class="{% if isCollapsible %}sp-collapsible{% endif %}">
-                        <div class="sp-flex sp-items-center">
-                            <div class="sp-icon sp-flex-none sp-me-6">
+                        <div class="sp:flex sp:items-center">
+                            <div class="sp-icon sp:flex-none sp:me-6">
                                 <a href="{{ type.url }}">
-                                    <i class="fas fa-fw {{ type.icon }} sp-text-5xl" alt="{{ type.name }}"></i>
+                                    <i class="fa-solid {{ type.icon }} sp:text-5xl" alt="{{ type.name }}"></i>
                                 </a>
                             </div>
-                            <div class="sp-grow sp-py-1">
-                                <h4 class="sp-text-xl"><a href="{{ type.url }}">{{ type.name }}</a></h4>
-                                <p class="sp-m-0">{{ type.description }}</p>
+                            <div class="sp:grow sp:py-1">
+                                <h4 class="sp:text-xl"><a href="{{ type.url }}">{{ type.name }}</a></h4>
+                                <p class="sp:m-0">{{ type.description }}</p>
                             </div>
                         </div>
 
                         {% if isCollapsible %}
-                            <span class="sp-ms-auto">
-                                <i class="fas fa-chevron-up"></i>
+                            <span class="sp:ms-auto">
+                                <i class="fa-solid fa-chevron-up"></i>
                             </span>
                         {% endif %}
                     </div>
                     {% if isCollapsible %}
-                        <div class="sp-hidden sp-mt-6">
+                        <div class="sp:hidden sp:mt-6">
                             {% include 'frontend.' ~ template ~ '.selfservice.article_list' with {'articles': type.articles, 'noRssFeed': true} %}
 
-                            <div class="sp-mt-6">
+                            <div class="sp:mt-6">
                                 <a href="{{ type.url }}" class="sp-button sp-button-sm">{{ Lang.get('general.view_all') }} &raquo;</a>
                             </div>
                         </div>

@@ -8,13 +8,13 @@
                 <a href="{{ article.url(type) }}">
                     <h4>
                         {% if show_pinned|default is not empty and show_pinned and article.pinned %}
-                            <span class="sp-float-start">
-                                <i class="fas fa-thumbtack sp-me-1 sp-text-yellow-600" aria-hidden="true"></i> &nbsp;
+                            <span class="sp:float-start">
+                                <i class="fa-solid fa-thumbtack sp:me-1 sp:text-yellow-600" aria-hidden="true"></i> &nbsp;
                             </span>
                         {% endif %}
                         {{ article.title }}
                     </h4>
-                    <p class="sp-description sp-truncate">{{ article.excerpt }}</p>
+                    <p class="sp-description sp:truncate">{{ article.excerpt }}</p>
                 </a>
 
                 {% include 'frontend.' ~ template ~ '.selfservice.article_details' %}
@@ -25,9 +25,9 @@
     {{ articles.render()|raw }}
 
     {% if type|default is not empty and type.view == 1 and noRssFeed is not defined %}
-        <div class="sp-mt-6 sp-text-center print:sp-hidden">
-            <a href="{{ rssFeedLink }}" class="sp-inline-block sp-px-3 sp-py-2 sp-bg-secondary sp-rounded sp-shadow hover:sp-bg-tertiary">
-                <i class="fas fa-rss-square sp-text-orange-600"></i>&nbsp;
+        <div class="sp:mt-6 sp:text-center sp:print:hidden">
+            <a href="{{ rssFeedLink }}" class="sp:inline-block sp:px-3 sp:py-2 sp:bg-secondary sp:rounded sp:shadow sp:hover:bg-tertiary">
+                <i class="fa-solid fa-rss-square sp:text-orange-600"></i>&nbsp;
                 {{ Lang.get('selfservice.rssfeed') }}
             </a>
         </div>

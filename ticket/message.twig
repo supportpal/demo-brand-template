@@ -1,107 +1,94 @@
-<div class="sp-message sp-message-{{ message.id }} {% if unread %}sp-message-collapsible{% else %}sp-message-collapsed{% endif %}" data-id="{{ message.id }}">
-	<div class="sp-flex">
-		<div class="sp-flex-initial sp-hidden sp-me-4 md:sp-block">
-			<img src="{{ message.user.avatar_url }}" class="sp-avatar sp-max-w-xs md:sp-max-w-md" />
-		</div>
-		<div class="sp-grow">
-			<div class="sp-message-header">
-				<span class="sp-name sp-text-lg {% if message.by == 0 %}sp-text-red-600{% else %}sp-text-green-600{% endif %}">
-					{{ message.user.formatted_name }}
-				</span>
-				{% if not message.attachments.isEmpty() %}
-					<span class="sp-attachment sp-description">&nbsp; <i class="fas fa-paperclip"></i></span>
-				{% endif %}
-				<div class="sp-description">{{ timeago(message.created_at) }}</div>
-			</div>
-		</div>
-	</div>
+<div class="sp-message sp:flex {% if unread %}sp-message-collapsible{% else %}sp-message-collapsed{% endif %}"
+     data-id="{{ message.id }}" data-timeline-id="{{ timeline.id }}" data-created-at="{{ message.created_at }}"
+     data-type="{{ enum('App\\Modules\\Ticket\\Models\\Enums\\TimelineEntry').Reply.value }}">
+    <div class="sp-message-avatar sp:flex-none sp:hidden sp:w-8 sp:pt-1.5 sp:me-3 sp:z-10 sp:md:block sp:xl:w-12 sp:xl:pt-2 sp:xl:-ms-2">
+        <img src="{{ message.user.avatar_url }}" class="sp-avatar sp:max-w-8 sp:xl:max-w-12" loading="lazy" />
+    </div>
 
-	<div class="sp-message-text sp-flow-root">
-		<div class="sp-message-text-trimmed {% if unread %}sp-hidden{% endif %}" dir="auto">{{ message.excerpt }}</div>
+    <div class="sp-message-content sp:grow">
+        <div class="sp-message-header">
+            <div class="sp-description">
+                <span class="sp-name sp:font-bold sp:text-base
+                          {% if message.isByOperator() %}sp:text-red-700 sp:dark:text-red-300{% else %}sp:text-green-700 sp:dark:text-green-300{% endif %}">
+                    {{ message.user.formatted_name }}
+                </span>
+                &nbsp;&middot;&nbsp;
+                {{ timeago(message.created_at) }}
+            </div>
+        </div>
 
-		<div class="sp-message-text-original {% if message.show_more is empty %}sp-message-text-loaded{% endif %}
-				 {% if message.clipped %}sp-message-text-clipped{% endif %} {% if not unread %}sp-hidden{% endif %}" dir="auto">
-			{% if message.show_more is empty %}
-				{{ message.purified_text|raw }}
-			{% endif %}
-		</div>
-	</div>
+        <div class="sp:px-4 sp:py-3 sp:overflow-auto">
+            <div class="sp-message-text sp:flow-root">
+                <div class="sp-message-text-trimmed {% if unread %}sp:hidden{% endif %}" dir="auto">{{ message.excerpt }}</div>
 
-	{% if not message.attachments.isEmpty() %}
-		<ul class="sp-attachments">
-			<hr class="sp-mx-0 sp-my-3 sp-border-secondary" />
+                <div class="sp-message-text-original {% if message.show_more is empty %}sp-message-text-loaded{% endif %}
+                         {% if message.clipped %}sp-message-text-clipped{% endif %} {% if not unread %}sp:hidden{% endif %}" dir="auto">
+                    {% if message.show_more is empty %}
+                        {{ message.purified_text|raw }}
+                    {% endif %}
+                </div>
+            </div>
 
-			<div class="sp-flex">
-				<div class="sp-grow">
-					<h4 class="sp-m-0">{{ Lang.choice('general.attachment', 2) }}</h4>
-				</div>
-				<div class="sp-flex-initial">
-					<button class="sp-download-all as-link" style="display: none;" title="{{ Lang.get('general.download_all') }}">
-						<i class="fas fa-download sp-text-secondary hover:sp-text-primary"></i>
-					</button>
-				</div>
-			</div>
+            {% if not message.attachments.isEmpty() %}
+            <div class="sp:print:hidden">
+                <ul class="sp-attachments">
+                    {% for attachment in message.attachments %}
+                        <li data-download-url="{{ attachment.direct_frontend_url }}" data-filename="{{ attachment.original_name }}">
+                            <a class="{% if attachment.upload.isPreviewableVideo() or attachment.upload.isPreviewableAudio() or attachment.upload.isPreviewableImage() %}sp-attachment-preview {% endif %}"
+                                    {% if attachment.upload.isPreviewable() %}
+                                data-download-url="{{ attachment.direct_frontend_url }}"
+                                {% if attachment.upload.isPreviewableVideo() or attachment.upload.isPreviewableAudio() %}
+                                    data-video='{"source": [{"src":"{{ attachment.previewFrontendUrl(true) }}", "type":"{{ attachment.upload.mime }}"}], "attributes": {"preload": false, "controls": true}}'
+                                {% else %}
+                                    href="{{ attachment.previewFrontendUrl(true) }}"
+                                    {% if not attachment.upload.isPreviewableImage() %}target="_blank"{% endif %}
+                                {% endif %}
+                            {% else %}
+                                href="{{ attachment.direct_frontend_url }}"
+                                    {% endif %}>
+                                <div class="sp-attachment-icon">
+                                    <div class="fiv-viv fiv-icon-{{ attachment.upload.icon }} sp:text-xl"></div>
+                                </div>
+                                <div class="sp-attachment-name" data-filename="{{ attachment.original_name }}">
+                                    {{ attachment.original_name }}
+                                </div>
+                                <div class="sp-attachment-size sp-description">{{ attachment.upload.size }}</div>
+                            </a>
+                            {% if message.isByUser() %}
+                                <div class="sp-delete-attachment"
+                                     title="{{ Lang.get('general.delete') }}"
+                                     data-url="{{ route('ticket.frontend.attachment.destroy') }}"
+                                     data-token="{{ Request.input('token', '') }}"
+                                     data-attachment-id="{{ attachment.id }}"
+                                     data-hash="{{ attachment.upload_hash }}">
+                                    <i class="fa-solid fa-times"></i>
+                                </div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
 
-			{% for attachment in message.attachments %}
-				<li class="sp-relative" data-download-url="{{ attachment.direct_frontend_url }}" data-filename="{{ attachment.original_name }}">
-                    {% if message.by != 0 %}
-						<div class="sp-delete-attachment sp-absolute sp-end-0 sp-px-2 sp-py-1/2 sp-bg-red-600 sp-rounded-se
-                                sp-text-white sp-cursor-pointer sp-z-10 hover:sp-bg-red-800"
-							 title="{{ Lang.get('general.delete') }}"
-							 data-url="{{ route('ticket.frontend.attachment.destroy') }}"
-                             data-token="{{ Request.input('token', '') }}"
-                             data-attachment-id="{{ attachment.id }}"
-                             data-hash="{{ attachment.upload_hash }}">
-							<i class="fas fa-times"></i>
-						</div>
-					{% endif %}
+                    <li>
+                        <button class="sp-download-all sp-button-sm" style="display: none;" title="{{ Lang.get('general.download_all') }}">
+                            <i class="fa-solid fa-download sp:text-secondary sp:hover:text-primary"></i>
+                            <span class="sp:hidden sp:md:inline">&nbsp;{{ Lang.get('general.download_all') }}</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
 
-					{% if attachment.upload.isPreviewable() %}
-						{% if attachment.upload.isPreviewableVideo() or attachment.upload.isPreviewableAudio() %}
-							<a class="sp-attachment-preview group"
-							   data-video='{"source": [{"src":"{{ attachment.previewFrontendUrl(true) }}", "type":"{{ attachment.upload.mime }}"}], "attributes": {"preload": false, "controls": true}}'
-					   		   data-download-url="{{ attachment.direct_frontend_url }}">
-						{% else %}
-							<a class="{% if attachment.upload.isPreviewableImage() %}sp-attachment-preview{% endif %} group"
-						   	   {% if not attachment.upload.isPreviewableImage() %}target="_blank"{% endif %}
-						       href="{{ attachment.previewFrontendUrl(true) }}"
-						       data-download-url="{{ attachment.direct_frontend_url }}">
-						{% endif %}
-					{% else %}
-						<a class="sp-group" href="{{ attachment.direct_frontend_url }}">
-							{% endif %}
-							<div class="sp-preview sp-relative sp-h-20 sp--mx-4 sp--mt-2 sp-mb-2 sp-rounded-t sp-text-center">
-								<div class="sp-h-20 sp-bg-primary sp-border sp-border-b-0 sp-border-secondary sp-rounded-t
-								group-hover:sp-opacity-25">
-									{% if attachment.upload.isPreviewableImage() %}
-										<span data-preview-url="{{ attachment.previewFrontendUrl() }}"
-											  data-download-url="{{ attachment.direct_frontend_url }}"
-											  data-icon="{{ attachment.upload.icon }}">
-											<i class="fas fa-spinner fa-spin fa-fw sp-mt-8"></i>
-										</span>
-									{% else %}
-										<span class="fiv-viv fiv-icon-{{ attachment.upload.icon }} sp-text-5xl sp-mt-4 group-hover:sp-opacity-0"></span>
-									{% endif %}
-								</div>
+            <div class="sp:p-3 sp:xl:px-4 sp:hidden sp:print:block">
+                <h4 class="sp:m-0">{{ Lang.choice('general.attachment', 2) }}</h4>
 
-								<div class="sp-preview-hover sp-absolute sp-w-full sp-h-full sp-top-0
-											sp-pt-{% if attachment.upload.isPreviewableImage() %}4{% else %}3{% endif %}
-											sp-text-4xl sp-opacity-0 group-hover:sp-opacity-100">
-									{% if attachment.upload.isPreviewable() %}
-										<i class="fas {% if attachment.upload.isPreviewableAudio() %}fa-headphones{% else %}fa-eye{% endif %}"></i>
-									{% else %}
-										<i class="fas fa-download"></i>
-									{% endif %}
-								</div>
-							</div>
-
-							<div>
-								<div class="sp-attachment-name">{{ attachment.original_name }}</div>
-								<div class="sp-description">{{ attachment.upload.size }}</div>
-							</div>
-						</a>
-				</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
+                <ul>
+                    {% for attachment in message.attachments %}
+                        <li>
+                            <a href="{{ attachment.direct_frontend_url }}">{{ attachment.original_name }}</a>
+                            <span class="sp-description">({{ attachment.upload.size }})</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 </div>

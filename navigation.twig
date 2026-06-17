@@ -1,4 +1,4 @@
-<ul class="{% if not account %}sp-nav{% else %}sp-text-end{% endif %} sp-ps-0">
+<ul class="{% if not account %}sp-nav{% else %}sp:text-end{% endif %} sp:ps-0">
     {% if not account %}
         <li>
             <a href="{{ route('core.frontend.home') }}" {% if route starts with 'core.frontend.home' %}class="current"{% endif %}>
@@ -74,8 +74,8 @@
         {% endif %}
     {% endif %}
     {% if Config.get('settings.website_url') is not empty %}
-        <li class="lg:sp-hidden">
-            <hr class="sp-mx-0 sp-my-4 sp-border-primary-200" />
+        <li class="sp:lg:hidden">
+            <hr class="sp:mx-0 sp:my-4 sp:border-primary-200" />
 
             <a href="{{ Config.get('settings.website_url') }}">
                 {{ Lang.get('core.back_to_website') }}

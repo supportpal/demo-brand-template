@@ -20,7 +20,7 @@
 
 	{# Latest / Most Popular articles #}
 
-	<ul class="sp-tabs sp-mt-6">
+	<ul class="sp-tabs sp:mt-6">
 	    <li id="Popular" class="sp-active">
 			<a>{{ Lang.get('selfservice.popular_items') }}</a>
         </li>
@@ -32,7 +32,7 @@
 	<div id="tabPopular" class="sp-tab-content">
 		{% include 'frontend.' ~ template ~ '.selfservice.article_list' with {'articles': popular} %}
 	</div>
-	<div id="tabLatest" class="sp-tab-content sp-hidden">
+	<div id="tabLatest" class="sp-tab-content sp:hidden">
 		{% include 'frontend.' ~ template ~ '.selfservice.article_list' with {'articles': latest} %}
 	</div>
 

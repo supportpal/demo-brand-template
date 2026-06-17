@@ -11,14 +11,14 @@
 
     <h2>{{ Lang.get('user.two_fa') }}</h2>
 
-    {{ form_open({'route': 'user.login.twofa', 'method': 'POST', 'class': 'validate sp-w-full sp-m-auto md:sp-w-2/3 xl:sp-w-1/2'}) }}
+    {{ form_open({'route': 'user.login.twofa', 'method': 'POST', 'class': 'validate sp:w-full sp:m-auto sp:md:w-2/3 sp:xl:w-1/2'}) }}
 
         {{ form_hidden('email', email) }}
         {{ form_hidden('twofa_token', twofa_token) }}
         {{ form_hidden('back', back) }}
         {{ form_hidden('remember_me', remember_me) }}
 
-        <div class="sp-form-row sp-form-full sp-mb-4">
+        <div class="sp-form-row sp-form-full sp:mb-4">
             {{ form_label('twofa_code', Lang.get('user.two_fa_code')) }}
             <div class="sp-input-container">
                 {{ form_text('twofa_code', null, {'placeholder': Lang.get('user.two_fa_code'), 'autofocus': 'autofocus'}) }}
