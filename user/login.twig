@@ -15,7 +15,7 @@
         </div>
     {% endif %}
 
-    {{ form_open({'route': 'user.login', 'method': 'post', 'class': 'validate sp-w-full sp-m-auto md:sp-w-2/3 xl:sp-w-1/2'}) }}
+    {{ form_open({'route': 'user.login', 'method': 'post', 'class': 'validate sp:w-full sp:m-auto sp:md:w-2/3 sp:xl:w-1/2'}) }}
 
         {% if intended_url is not null %}
             {{ form_hidden('back', intended_url) }}
@@ -32,7 +32,7 @@
             {{ form_label('password', Lang.get('general.password')) }}
             <div class="sp-input-container">
                 {{ form_password('password') }}
-                <div class="sp-mt-2 sp-description">
+                <div class="sp:mt-2 sp-description">
                     <a href="{{ route('user.reset') }}">{{ Lang.get('user.forgot_password') }}</a>
                 </div>
             </div>
@@ -49,7 +49,7 @@
 
         {% if showCaptcha %}
             {% if Captcha.isVisible() %}
-                <div class="sp-form-row sp-items-center">
+                <div class="sp-form-row sp:items-center">
                     <div class="sp-input-container">
                         {{ Captcha.getHtml() }}
                     </div>
@@ -67,10 +67,10 @@
         </div>
 
         {% if not Request.has('social') %}
-            <div class="sp-text-center">
+            <div class="sp:text-center">
                 {% if SamlAuth.exists(SamlAuth.frontendGuard(current_brand(false))) %}
-                    <div class="sp-description sp--mx-6 sp-my-6 sp-border-b sp-border-secondary sp-text-center sp-leading-0">
-                        <span class="sp-bg-primary sp-px-4">{{ Lang.get('general.or') }}</span>
+                    <div class="sp-description sp:-mx-6 sp:my-6 sp:border-b sp:border-secondary sp:text-center sp:leading-0">
+                        <span class="sp:bg-primary sp:px-4">{{ Lang.get('general.or') }}</span>
                     </div>
 
                     <input type="button" class="saml sp-button"
@@ -79,15 +79,15 @@
                 {% endif %}
 
                 {% if not socialite_providers.isEmpty() %}
-                    <div class="sp-description sp--mx-6 sp-my-6 sp-border-b sp-border-secondary sp-text-center sp-leading-0">
-                        <span class="sp-bg-primary sp-px-4">{{ Lang.get('general.or') }}</span>
+                    <div class="sp-description sp:-mx-6 sp:my-6 sp:border-b sp:border-secondary sp:text-center sp:leading-0">
+                        <span class="sp:bg-primary sp:px-4">{{ Lang.get('general.or') }}</span>
                     </div>
 
                     {% include 'frontend.' ~ template ~ '.user.social_login_options' with {'new_line': true} %}
                 {% endif %}
             </div>
 
-            <div class="sp-text-center">
+            <div class="sp:text-center">
                 {% if Config.get('settings.registration_enabled') == 1 %}
                     <hr />
 

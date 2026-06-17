@@ -12,7 +12,7 @@
 {% block content %}
     <h2>{{ Lang.choice('general.detail', 2) }}</h2>
 
-    <div class="sp-mb-6 md:sp-p-6 md:sp-pb-0 md:sp-border md:sp-border-secondary md:sp-rounded">
+    <div class="sp:mb-6 sp:md:p-6 sp:md:pb-0 sp:md:border sp:md:border-secondary sp:md:rounded">
 
         <div class="sp-form-row">
             <label>{{ Lang.get('ticket.subject') }}</label>
@@ -96,7 +96,7 @@
 
     <h2>{{ Lang.get('general.content') }}</h2>
 
-    <div class="sp-email-content sp-p-6 sp-border sp-border-secondary sp-rounded sp-overflow-x-auto">
+    <div class="sp-email-content sp:p-6 sp:border sp:border-secondary sp:rounded sp:overflow-x-auto">
         <div dir="auto">
             {{ Purifier.clean(record.contents) }}
         </div>

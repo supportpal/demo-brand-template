@@ -8,8 +8,8 @@
 {% endblock %}
 
 {% block precontent %}
-    <div class="sp-alert sp-alert-error sp-alert-sticky sp-hidden attachment">
-        <div class="sp-container sp-mx-auto"></div>
+    <div class="sp-alert sp-alert-error sp-alert-sticky sp:hidden attachment">
+        <div class="sp:container sp:mx-auto"></div>
     </div>
 {% endblock %}
 
@@ -79,11 +79,11 @@
             </div>
         </div>
 
-        <div class="sp-form-row sp-form-full sp-suggested-articles sp-hidden">
+        <div class="sp-form-row sp-form-full sp-suggested-articles sp:hidden">
             <label></label>
             <div class="sp-input-container">
-                <div class="sp-p-6 sp-bg-secondary sp-rounded">
-                    <h4 class="sp-mb-3">{{ Lang.get('selfservice.related_articles') }}</h4>
+                <div class="sp:p-6 sp:bg-secondary sp:rounded">
+                    <h4 class="sp:mb-3">{{ Lang.get('selfservice.related_articles') }}</h4>
                     <div class="sp-articles-list"></div>
                 </div>
             </div>
@@ -91,7 +91,7 @@
 
         <div class="sp-form-row sp-form-full">
             {{ form_label('text', Lang.choice('general.message', 1)) }}
-            <div class="sp-input-container">
+            <div class="sp-input-container sp:relative">
                 {{ form_editor('text') }}
 
                 <div class="sp-attachment-details">
@@ -104,9 +104,9 @@
                 </div>
 
                 <ul class="sp-attached-files">
-                    <li class="sp-flex sp-hidden">
-                        <div class="sp-me-2 sp-truncate">
-                            <i class="fas fa-file"></i>&nbsp;
+                    <li class="sp:flex sp:hidden">
+                        <div class="sp:me-2 sp:truncate">
+                            <i class="fa-solid fa-file"></i>&nbsp;
 
                             <span class="sp-file-information">
                                 <span class="sp-filename"></span>
@@ -114,8 +114,8 @@
                             </span>
                         </div>
 
-                        <div class="sp-delete-attachment sp-hidden sp-bg-red-600" title="{{ Lang.get('general.remove') }}">
-                            <i class="fas fa-times sp-text-white"></i>
+                        <div class="sp-delete-attachment sp:hidden" title="{{ Lang.get('general.remove') }}">
+                            <i class="fa-solid fa-times sp:text-white"></i>
                         </div>
 
                         <div class="sp-progress-bar">
@@ -124,9 +124,9 @@
                     </li>
                     {% if Request.old() is not empty and Request.old()['attachment'] is not empty %}
                         {% for hash, file in Request.old()['attachment'] %}
-                            <li class="sp-flex">
-                                <div class="sp-me-2 sp-truncate">
-                                    <i class="fas fa-file"></i>&nbsp;
+                            <li class="sp:flex">
+                                <div class="sp:me-2 sp:truncate">
+                                    <i class="fa-solid fa-file"></i>&nbsp;
 
                                     <span class="sp-file-information">
                                         <span class="sp-filename">{{ file }}</span>
@@ -134,23 +134,25 @@
                                     </span>
                                 </div>
 
-                                <div class="sp-delete-attachment sp-bg-red-600"
+                                <div class="sp-delete-attachment"
                                      data-url="{{ route('ticket.frontend.attachment.destroy') }}"
                                      data-hash="{{ hash }}" title="{{ Lang.get('general.remove') }}">
-                                    <i class="fas fa-times sp-text-white"></i>
+                                    <i class="fa-solid fa-times sp:text-white"></i>
                                 </div>
                             </li>
                         {% endfor %}
                     {% endif %}
                 </ul>
 
-                <div class="sp-mt-4">
-                    <div class="sp-attachment-dragover sp-hidden">
+                <div class="sp-attachment-dragover sp:hidden">
+                    <div class="sp:m-auto">
                         {{ Lang.get('general.drag_and_drop') }}
                     </div>
+                </div>
 
+                <div class="sp:mt-3">
                     <label class="sp-file-input">
-                        <a class="sp-button"><i class="fas fa-paperclip"></i>&nbsp; {{ Lang.get('general.add_attachment') }}</a>
+                        <a class="sp-button"><i class="fa-solid fa-paperclip"></i>&nbsp; {{ Lang.get('general.add_attachment') }}</a>
                         <input class="sp-file-upload" type="file" name="files[]"
                                data-url="{{ route('ticket.frontend.attachment.upload') }}" multiple="multiple">
                     </label>
@@ -164,7 +166,7 @@
             {% if Captcha.isVisible() %}
                 <hr />
 
-                <div class="sp-form-row sp-items-center">
+                <div class="sp-form-row sp:items-center">
                     <div class="sp-input-container">
                         {{ Captcha.getHtml() }}
                     </div>
@@ -198,9 +200,9 @@
     <script src="{{ asset_rev('resources/assets/libs/editor.min.js') }}"></script>
 
     <!-- Attachments -->
-    <script src="{{ asset_rev('resources/assets/libs/fileupload/js/jquery.fileupload.min.js') }}"></script>
+    <script src="{{ asset_rev('resources/assets/dist/fileupload.min.js') }}"></script>
     <script>
-        new FileUpload();
+        new SpFileUpload.FileUpload();
     </script>
 
     <!-- Custom fields -->

@@ -25,7 +25,7 @@
             </div>
         {% else %}
             {% if not socialite_providers.isEmpty() %}
-                <div class="sp--m-3/2 sp-text-center">
+                <div class="sp:-m-1.5 sp:text-center">
                     {% include 'frontend.' ~ template ~ '.user.social_login_options' %}
                 </div>
 
@@ -43,7 +43,7 @@
 
             {% if show_captcha %}
                 {% if Captcha.isVisible() %}
-                    <div class="sp-form-row sp-items-center">
+                    <div class="sp-form-row sp:items-center">
                         <div class="sp-input-container">
                             {{ Captcha.getHtml() }}
                         </div>

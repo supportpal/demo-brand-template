@@ -9,11 +9,11 @@
             {% if organisation|default is not empty and new is not defined %}
                 {% if record.organisation.isOwner(record.id) or record.organisation_access_level == 0 %}
                     <br />
-                    <a href="{{ route('user.organisation') }}" class="sp-button sp-mt-3">{{ Lang.get('user.manage_organisation') }}</a>
+                    <a href="{{ route('user.organisation') }}" class="sp-button sp:mt-3">{{ Lang.get('user.manage_organisation') }}</a>
                 {% endif %}
                 {% if not record.organisation.isOwner(record.id) or record.organisation.users().count() == 1 %}
                     <br />
-                    <a class="leave-organisation sp-button sp-mt-3">{{ Lang.get('user.leave_organisation') }}</a>
+                    <a class="leave-organisation sp-button sp:mt-3">{{ Lang.get('user.leave_organisation') }}</a>
                 {% endif %}
             {% endif %}
         </div>

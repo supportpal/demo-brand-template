@@ -1,11 +1,6 @@
-<div class="sp-messages-container" data-position="inline">
-    {% for message in messages %}
-        {% if (ticket.user.isAscendingReplyOrder() and loop.last) or (ticket.user.isDescendingReplyOrder() and loop.first) %}
-            {% set unread = true %}
-        {% else %}
-            {% set unread = lastViewed and lastViewed < message.created_at %}
-        {% endif %}
-
-        {% include 'frontend.' ~ template ~ '.ticket.message' with {'unread': unread} %}
-    {% endfor %}
+<div class="sp-messages-container sp:-m-6" data-position="inline">
+    <div class="sp-loading sp:p-3 sp:mx-6 sp:bg-secondary sp:rounded sp:text-center">
+        <i class="fa-solid fa-spinner fa-pulse"></i>
+        {{ Lang.get('general.loading') ~ '...'  }}
+    </div>
 </div>

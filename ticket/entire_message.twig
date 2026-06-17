@@ -5,6 +5,8 @@
     {{ View.fireHook('frontend.head_start') }}
 
     <meta name="robots" content="noindex" />
+    <meta name="notes-url-id" content="{{ notesUrlId }}" />
+    <meta name="timeline-url-id" content="{{ timelineUrlId }}" />
 
     <title>{{ ticket.subject }}</title>
 
@@ -14,24 +16,24 @@
     {{ View.fireHook('frontend.head_end') }}
 </head>
 
-<body class="sp-bg-secondary sp-text-primary print:sp-bg-primary" data-disable-pace>
+<body class="sp:bg-secondary sp:text-primary sp:print:bg-primary" data-disable-pace>
 
     {{ View.fireHook('frontend.body_start') }}
 
-    <div class="xs:sp-px-6 print:sp-p-0">
-        <div class="sp-mx-auto sp-mt-6 xs:sp-mb-6">
+    <div class="sp:xs:px-6 sp:print:p-0">
+        <div class="sp:mx-auto sp:mt-6 sp:xs:mb-6">
             {{ View.fireHook('frontend.wrapper_start') }}
 
-            <div class="sp-all-attachments sp-alert sp-alert-info sp-hidden">
+            <div class="sp-all-attachments sp-alert sp-alert-info sp:hidden">
                 {{ Lang.get('ticket.downloading') }}
             </div>
 
-            <h2 class="sp-ms-4 xs:sp-ms-0">{{ ticket.subject }}</h2>
+            <h2 class="sp:ms-4 sp:xs:ms-0">{{ ticket.subject }}</h2>
 
             <div class="sp-content">
                 {{ View.fireHook('frontend.content_start') }}
 
-                <div class="sp-messages-container sp-bg-primary xs:sp-rounded">
+                <div class="sp-messages-container sp:bg-primary sp:xs:rounded">
                     {{ View.fireHook('frontend.content_inner_start') }}
 
                     {% include 'frontend.' ~ template ~ '.ticket.message' with {'unread': true} %}
@@ -51,7 +53,7 @@
     {% include 'frontend.' ~ template ~ '.footer_common' %}
 
     <!-- Attachments -->
-    <script src="{{ asset_rev('resources/assets/libs/fileupload/js/jquery.fileupload.min.js') }}"></script>
+    <script src="{{ asset_rev('resources/assets/dist/fileupload.min.js') }}"></script>
 
     <!-- Attachment previews -->
     <script src="{{ asset_rev('resources/assets/libs/att.preview/js/att.preview.min.js') }}"></script>
@@ -59,7 +61,12 @@
     <script src="{{ asset_rev('resources/assets/dist/ticket-view.js') }}"></script>
     <script>
         App.extend('FrontendTicketView', new SpTicket.FrontendTicket);
-        App.extend('TicketView', new SpTicket.TicketView(App.FrontendTicketView));
+        App.extend('TicketView', new SpTicket.TicketView(
+            App.FrontendTicketView,
+            "{{ ticket.id }}",
+            undefined,
+            "{{ auth_user().isAscendingReplyOrder() ? 'ASC' : 'DESC' }}",
+        ));
     </script>
 
     {{ View.fireHook('frontend.body_end') }}
