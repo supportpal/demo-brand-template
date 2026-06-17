@@ -14,7 +14,7 @@
     {% else %}
 
         {% if isModuleEnabled('Ticket') %}
-            <div class="sp:flex sp:flex-wrap sp:-m-3 sp:lg:flex-nowrap {% if not types.isEmpty() %}sp:mb-6{% endif %}">
+            <div class="sp:flex sp:flex-wrap sp:-m-3 sp:lg:flex-nowrap {% if not types.isEmpty() %}sp:mb-3{% endif %}">
                 <a href="{{ route('ticket.frontend.ticket.createStep1') }}"
                    class="sp:w-full sp:px-6 sp:py-3 sp:m-3 sp:bg-secondary sp:rounded sp:shadow sp:lg:w-1/2">
                     <div class="sp-dashboard-section sp:flex sp:items-center sp:h-full">
@@ -59,37 +59,16 @@
 
         {% if isModuleEnabled('Selfservice') %}
             {% for type in types %}
-                {% set isCollapsible = not type.articles.isEmpty() and type.content == 0 and type.show_on_dashboard %}
-
                 <div class="sp-dashboard-section" id="sp-selfservice-{{ type.id }}">
-                    <div class="{% if isCollapsible %}sp-collapsible{% endif %}">
-                        <div class="sp:flex sp:items-center">
-                            <div class="sp-icon sp:flex-none sp:me-6">
-                                <a href="{{ type.url }}">
-                                    <i class="fa-solid {{ type.icon }} sp:text-5xl" alt="{{ type.name }}"></i>
-                                </a>
-                            </div>
-                            <div class="sp:grow sp:py-1">
-                                <h4 class="sp:text-xl"><a href="{{ type.url }}">{{ type.name }}</a></h4>
-                                <p class="sp:m-0">{{ type.description }}</p>
-                            </div>
+                    <a href="{{ type.url }}" class="sp:flex sp:items-center sp:px-6 sp:py-3 sp:bg-secondary sp:rounded sp:shadow">
+                        <div class="sp-icon sp:flex-none sp:me-6">
+                            <i class="fa-solid {{ type.icon }} sp:text-5xl" alt="{{ type.name }}"></i>
                         </div>
-
-                        {% if isCollapsible %}
-                            <span class="sp:ms-auto">
-                                <i class="fa-solid fa-chevron-up"></i>
-                            </span>
-                        {% endif %}
-                    </div>
-                    {% if isCollapsible %}
-                        <div class="sp:hidden sp:mt-6">
-                            {% include 'frontend.' ~ template ~ '.selfservice.article_list' with {'articles': type.articles, 'noRssFeed': true} %}
-
-                            <div class="sp:mt-6">
-                                <a href="{{ type.url }}" class="sp-button sp-button-sm">{{ Lang.get('general.view_all') }} &raquo;</a>
-                            </div>
+                        <div class="sp:grow sp:py-1">
+                            <h4 class="sp:text-xl">{{ type.name }}</h4>
+                            <p class="sp:m-0 sp:text-secondary">{{ type.description }}</p>
                         </div>
-                    {% endif %}
+                    </a>
                 </div>
             {% endfor %}
         {% endif %}
