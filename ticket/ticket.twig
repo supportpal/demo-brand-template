@@ -3,6 +3,7 @@
 {% block meta %}
     <meta name="robots" content="noindex" />
     <meta name="ticket-subject" content="{{ ticket.subject }}" />
+    <meta name="timeline-url-id" content="{{ timelineUrlId }}" />
     {% if download %}
         <meta http-equiv="refresh" content="2;{{ download.direct_frontend_url }}" />
     {% endif %}
