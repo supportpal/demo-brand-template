@@ -7,7 +7,7 @@
     <meta name="robots" content="noindex" />
     <meta name="timeline-url-id" content="{{ timelineUrlId }}" />
 
-    <title>{{ ticket.subject }}</title>
+    <title>(#{{ ticket.number }}) {{ ticket.subject }}</title>
 
     {% include 'frontend.' ~ template ~ '.head_common' %}
 
@@ -35,11 +35,11 @@
                 </div>
             </div>
 
-            <div class="sp:px-4 sp:pt-6 sp:py-2 sp:bg-primary sp:xs:px-6 sp:xs:rounded">
+            <div class="sp:px-4 sp:pt-6 sp:py-2 sp:bg-primary sp:xs:px-6 sp:xs:rounded sp:print:pb-0">
                 {% include 'frontend.' ~ template ~ '.ticket.ticket_details' %}
 
                 {% if customfields is not empty %}
-                    {% include 'frontend.' ~ template ~ '.ticket.ticket_custom_fields' with {'no_save': true} %}
+                    {% include 'frontend.' ~ template ~ '.ticket.ticket_custom_fields' with {'no_save': true, 'customfields': customfields|filter(item => item.value is not null)} %}
                 {% endif %}
             </div>
 

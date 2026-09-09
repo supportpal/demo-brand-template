@@ -9,123 +9,149 @@
     {% endif %}
 
     <div class="reply-form sp-editor-container sp-form-row sp-form-full sp:relative">
-        <div class="sp-input-container">
-            <div class="sp-recipients sp:truncate sp:cursor-pointer">
-                <div class="sp:table-row">
-                    <div class="sp:table-cell">{{ Lang.get('ticket.cc') }}</div>
-                    <div class="sp:table-cell">
-                        <div class="sp-recipients-text">
-                            {% if organisationEmails is empty and ticket.cc is empty %}
-                                <div class="sp-description">{{ Lang.get('ticket.cc_desc') }}</div>
-                            {% else %}
-                                {{ organisationEmails.concat(ticket.cc).join(', ') }}
-                            {% endif %}
-                        </div>
-
-                        <select name="cc[]" multiple="multiple" class="sp-recipients-input sp:hidden">
-                            {% for email in organisationEmails %}
-                                <option selected="selected" data-data='{{ {'value': email, 'unremovable': true}|json_encode(constant('JSON_FORCE_OBJECT')) }}'
-                                        value='{{ email }}'>
-                                    {{ email }}
-                                </option>
-                            {% endfor %}
-                            {% for email in ticket.cc %}
-                                <option selected="selected" value='{{ email }}'>{{ email }}</option>
-                            {% endfor %}
-                        </select>
+        <div class="sp-recipients">
+            <div class="sp:table-row">
+                <div class="sp:table-cell">{{ Lang.get('ticket.cc') }}</div>
+                <div class="sp:table-cell">
+                    <div class="sp-recipients-text sp:cursor-pointer">
+                        {% if organisationEmails is empty and ticket.cc is empty %}
+                            <div class="sp-description">{{ Lang.get('ticket.cc_desc') }}</div>
+                        {% else %}
+                            {{ organisationEmails.concat(ticket.cc).join(', ') }}
+                        {% endif %}
                     </div>
+
+                    <select name="cc[]" multiple="multiple" class="sp-recipients-input sp:hidden">
+                        {% for email in organisationEmails %}
+                            <option selected="selected" data-data='{{ {'value': email, 'unremovable': true}|json_encode(constant('JSON_FORCE_OBJECT')) }}'
+                                    value='{{ email }}'>
+                                {{ email }}
+                            </option>
+                        {% endfor %}
+                        {% for email in ticket.cc %}
+                            <option selected="selected" value='{{ email }}'>{{ email }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
+        </div>
 
-            <div class="tox-rounded-none sp-validation-container">
-                {% set loadDraftMessageRoute = draft is not empty ? route('ticket.frontend.message.showJson', {id: draft.id}) : null %}
-                {{ form_editor('text', null, {'data-route': loadDraftMessageRoute, 'id': 'newMessage'}) }}
-            </div>
+        <div class="tox-rounded-none sp-validation-container">
+            {% set loadDraftMessageRoute = draft is not empty ? route('ticket.frontend.message.showJson', {id: draft.id}) : null %}
+            {{ form_editor('text', null, {'data-route': loadDraftMessageRoute, 'id': 'newMessage'}) }}
+        </div>
 
-            <div class="sp:flex sp:items-stretch sp:px-1 sp:bg-secondary sp:border sp:border-t-0 sp:border-tertiary sp:rounded-b-sm">
-                <label class="sp-file-input sp:inline-block sp:px-2 sp:py-1.5 sp:text-sm sp:cursor-pointer sp:hover:text-secondary
-                             {% if not auth_check() %}sp:grow{% else %}sp:flex-none{% endif %}">
-                    <i class="fa-solid fa-paperclip"></i>
-                    <span class="sp:hidden sp:md:inline">&nbsp;{{ Lang.get('general.add_attachment') }}</span>
-                    <input class="sp-file-upload" type="file" name="files[]"
-                           data-url="{{ route('ticket.frontend.attachment.upload') }}" multiple="multiple">
-                </label>
-
-                {% if auth_check() %}
-                    <div class="tox-button-separator"></div>
-
-                    <span class="save-draft sp:inline-block sp:px-1.5 sp:py-1 sp:cursor-pointer sp:hover:text-secondary"
-                          title="{{ Lang.get('ticket.save_draft') }}">
-                        <i class="fa-solid fa-save"></i>
-                    </span>
-
-                    <span class="discard-draft sp:inline-block sp:px-1.5 sp:py-1 sp:cursor-pointer sp:hover:text-secondary
-                                 {% if draft|default is empty %}sp:hidden{% endif %}"
-                                      title="{{ Lang.get('ticket.discard_draft') }}">
-                        <i class="fa-solid fa-eraser"></i>
-                    </span>
-
-                    <span class="draft-success sp-description sp:inline-block sp:px-2 sp:py-1.5 sp:text-xs sp:truncate
-                                 sp:sm:text-sm {% if draft|default is empty %}sp:hidden{% endif %}">
-                        {% if draft|default is not empty %}
-                            {{ Lang.get('ticket.draft_saved', {'time': timeago(draft.updated_at)})|raw }}
-                        {% endif %}
-                    </span>
-                {% endif %}
-            </div>
-
-            <div class="sp-attachment-details">
-                <input type="hidden" name="attachment[]" disabled="disabled" />
-                {% for attachment in draft.attachments %}
-                    <input type="hidden" name="attachment[{{ attachment.upload_hash }}]"
-                           id="attachment[{{ attachment.upload_hash }}]"
-                           value="{{ attachment.original_name }}" />
-                {% endfor %}
-            </div>
-
-            <ul class="sp-attached-files">
-                <li class="sp:flex sp:hidden">
-                    <div class="sp:me-2 sp:truncate">
-                        <i class="fa-solid fa-file"></i>&nbsp;
-
-                        <span class="sp-file-information">
-                            <span class="sp-filename"></span>
-                            <span class="sp-description sp-filesize"></span>
-                        </span>
-                    </div>
-
-                    <div class="sp-delete-attachment sp:hidden" title="{{ Lang.get('general.remove') }}">
-                        <i class="fa-solid fa-times sp:text-white"></i>
-                    </div>
+        <ul class="sp-attached-files">
+            <li class="sp:hidden">
+                <div class="sp-file-information">
+                    <span class="sp-filename sp-truncate-middle"></span>
 
                     <div class="sp-progress-bar">
                         <div class="sp-bar"></div>
                     </div>
+                </div>
+
+                <div class="sp-delete-attachment sp:hidden" title="{{ Lang.get('general.remove') }}">
+                    <i class="fa-solid fa-times sp:text-white"></i>
+                </div>
+            </li>
+
+            {% for attachment in draft.attachments %}
+                <li>
+                    <div class="sp-file-information">
+                        <span class="sp-filename sp-truncate-middle" data-truncate="{{ attachment.original_name }}">{{ attachment.original_name }}</span>
+                    </div>
+
+                    <div class="sp-delete-attachment"
+                         data-url="{{ route('ticket.frontend.attachment.destroy') }}"
+                         data-attachment-id="{{ attachment.id }}"
+                         data-size="{{ attachment.upload.getRawOriginal('size') }}"
+                         data-hash="{{ attachment.upload_hash }}"
+                         data-silent="false"
+                         title="{{ Lang.get('general.remove') }}">
+                        <i class="fa-solid fa-times sp:text-white"></i>
+                    </div>
                 </li>
+            {% endfor %}
+        </ul>
 
-                {% for attachment in draft.attachments %}
-                    <li class="sp:flex">
-                        <div class="sp:me-2 sp:truncate">
-                            <i class="fa-solid fa-file"></i>&nbsp;
+        <div class="sp:flex sp:items-stretch sp:px-1 sp:bg-secondary sp:border sp:border-t-0 sp:border-tertiary sp:rounded-b-sm">
+            <label class="sp-file-input sp:inline-block sp:px-2 sp:py-1.5 sp:text-sm sp:cursor-pointer sp:hover:text-secondary
+                         {% if not auth_check() %}sp:grow{% else %}sp:flex-none{% endif %}">
+                <i class="fa-solid fa-paperclip"></i>
+                <span class="sp:hidden sp:md:inline">&nbsp;{{ Lang.get('general.add_attachment') }}</span>
+                <input class="sp-file-upload" type="file" name="files[]"
+                       data-url="{{ route('ticket.frontend.attachment.upload') }}" multiple="multiple">
+            </label>
 
-                            <span class="sp-file-information">
-                            <span class="sp-filename">{{ attachment.original_name }}</span>
-                                <span class="sp-description sp-filesize">({{ attachment.upload.size }})</span>
+            {% if auth_check() %}
+                <div class="sp-draft-options sp:flex sp:items-stretch sp:min-w-0 {% if draft|default is empty %}sp:hidden{% endif %}">
+                    <div class="tox-button-separator"></div>
+
+                    <div class="sp:hidden sp:md:flex sp:items-center sp:truncate">
+                        <div class="save-draft sp:px-1.5 sp:py-1 sp:cursor-pointer sp:hover:text-secondary"
+                              title="{{ Lang.get('ticket.save_draft') }}">
+                            <i class="fa-solid fa-save"></i>
+                        </div>
+
+                        <div class="discard-draft sp:px-1.5 sp:py-1 sp:cursor-pointer sp:hover:text-secondary
+                                     {% if draft|default is empty %}sp:hidden{% endif %}"
+                              title="{{ Lang.get('ticket.discard_draft') }}">
+                            <i class="fa-solid fa-eraser"></i>
+                        </div>
+
+                        <div class="draft-success sp-description sp:px-2 sp:text-xs sp:truncate sp:sm:text-sm
+                                     {% if draft|default is empty %}sp:hidden{% endif %}">
+                            {% if draft|default is not empty %}
+                                {{ Lang.get('ticket.draft_saved', {'time': timeago(draft.updated_at)})|raw }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="sp-draft-menu sp-dropdown-container sp:relative sp:flex sp:items-center sp:md:hidden">
+                        <div class="sp-action sp:p-2 sp:leading-0 sp:cursor-pointer sp:hover:text-secondary"
+                             title="{{ Lang.get('general.draft') }}">
+                            <span class="fa-stack sp:text-[0.5rem]">
+                                <i class="fa-solid fa-save fa-stack-2x"></i>
+                                <span class="sp-draft-icon sp:text-red-600 {% if draft|default is empty %}sp:hidden{% endif %}">
+                                    <i class="fa-solid fa-circle fa-stack-1x sp:transform sp:translate-x-2 sp:-translate-y-2"></i>
+                                </span>
                             </span>
                         </div>
-
-                        <div class="sp-delete-attachment"
-                             data-url="{{ route('ticket.frontend.attachment.destroy') }}"
-                             data-attachment-id="{{ attachment.id }}"
-                             data-size="{{ attachment.upload.getRawOriginal('size') }}"
-                             data-hash="{{ attachment.upload_hash }}"
-                             data-silent="false"
-                             title="{{ Lang.get('general.remove') }}">
-                            <i class="fa-solid fa-times sp:text-white"></i>
+                        <div class="sp-dropdown sp:top-full sp:start-0 sp:py-1">
+                            <ul>
+                                <li class="sp:px-3 sp:py-1.5">
+                                    <strong class="sp:m-0 sp:text-base">{{ Lang.get('general.draft') }}</strong>
+                                    <div class="draft-success sp-description sp:text-xs {% if draft|default is empty %}sp:hidden{% endif %}">
+                                        {% if draft|default is not empty %}
+                                            {{ Lang.get('ticket.draft_saved', {'time': timeago(draft.updated_at)})|raw }}
+                                        {% endif %}
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="save-draft sp:cursor-pointer">
+                                        <i class="fa-solid fa-save fa-fw sp:me-2"></i>{{ Lang.get('ticket.save_draft') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="discard-draft sp:cursor-pointer {% if draft|default is empty %}sp:hidden{% endif %}">
+                                        <i class="fa-solid fa-eraser fa-fw sp:me-2"></i>{{ Lang.get('ticket.discard_draft') }}
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                    </li>
-                {% endfor %}
-            </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="sp-attachment-details">
+            <input type="hidden" name="attachment[]" disabled="disabled" />
+            {% for attachment in draft.attachments %}
+                <input type="hidden" name="attachment[{{ attachment.upload_hash }}]"
+                       id="attachment[{{ attachment.upload_hash }}]"
+                       value="{{ attachment.original_name }}" />
+            {% endfor %}
         </div>
 
         <div class="sp-attachment-dragover sp:hidden">
