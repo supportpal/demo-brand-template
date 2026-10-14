@@ -46,7 +46,7 @@
             </div>
 
             <div class="sp:hidden sp:lg:block">
-                {% include 'frontend.' ~ template ~ '.ticket.ticket_details' %}
+                {% include 'frontend.' ~ template ~ '.ticket.ticket_details' with {'printing': false} %}
 
                 {% if customfields is not empty %}
                     {% include 'frontend.' ~ template ~ '.ticket.ticket_custom_fields' %}

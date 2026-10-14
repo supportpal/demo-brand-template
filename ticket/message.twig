@@ -13,7 +13,7 @@
                     {{ message.user.formatted_name }}
                 </span>
                 &nbsp;&middot;&nbsp;
-                {{ timeago(message.created_at) }}
+                {% if printing %}{{ formatDate(message.created_at) }}{% else %}{{ timeago(message.created_at) }}{% endif %}
             </div>
         </div>
 
