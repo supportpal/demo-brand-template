@@ -43,14 +43,24 @@
     <div class="sp-form-row">
         <label>{{ Lang.get('ticket.submitted') }}</label>
         <div class="sp-input-container">
-            {{ timeago(ticket.created_at) }}
+            {% if printing %}
+                {{ formatDate(ticket.created_at) }}
+            {% else %}
+                {{ timeago(ticket.created_at) }}
+            {% endif %}
         </div>
     </div>
 
     <div class="sp-form-row">
         <label>{{ Lang.get('ticket.last_reply') }}</label>
         <div class="sp-input-container">
-            <span class="sp-ticket-updated">{{ timeago(ticket.last_message_time) }}</span>
+            <span class="sp-ticket-updated">
+                {% if printing %}
+                    {{ formatDate(ticket.last_message_time) }}
+                {% else %}
+                    {{ timeago(ticket.last_message_time) }}
+                {% endif %}
+            </span>
         </div>
     </div>
 </div>
